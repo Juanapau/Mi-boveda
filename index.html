@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-:root{--bg:#070707;--panel:#111;--panel2:#191919;--line:#272727;--red:#C0152A;--red2:#e01f37;--gold:#D4A537;--txt:#f2f2f2;--muted:#9a9a9a;--ok:#3fbf6f}
+:root{--bg:#070707;--panel:#111;--panel2:#191919;--line:#272727;--red:#25A9A0;--red2:#2fc4b9;--alert:#e5484d;--gold:#D4A537;--txt:#f2f2f2;--muted:#9a9a9a;--ok:#3fbf6f}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--bg);color:var(--txt);font-family:'Nunito',system-ui,sans-serif;min-height:100%}
 button{font-family:inherit;cursor:pointer;border:none}
@@ -28,7 +28,7 @@ input,select,textarea{font-family:inherit;font-size:16px}
 
 /* Pantallas de acceso */
 .lock-box{width:100%;max-width:380px;text-align:center}
-.logo{width:84px;height:84px;border-radius:22px;background:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:36px;color:var(--gold);box-shadow:0 10px 40px rgba(192,21,42,.35)}
+.logo{width:84px;height:84px;border-radius:22px;background:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:36px;color:var(--gold);box-shadow:0 10px 40px rgba(37,169,160,.35)}
 h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:46px;letter-spacing:2px;line-height:1}
 h1 span{color:var(--red2)}
 .sub{color:var(--muted);margin:8px 0 24px;font-size:15px}
@@ -46,8 +46,8 @@ textarea.inp{min-height:80px;resize:vertical}
 .btn:active{background:var(--red2)}
 .btn:disabled{opacity:.55}
 .btn.ghost{background:transparent;border:2px solid var(--line);color:var(--txt)}
-.btn.danger{background:transparent;border:2px solid var(--red);color:var(--red2)}
-.msg{min-height:22px;margin-top:12px;font-size:14px;color:var(--red2);font-weight:700}
+.btn.danger{background:transparent;border:2px solid var(--alert);color:var(--alert)}
+.msg{min-height:22px;margin-top:12px;font-size:14px;color:var(--alert);font-weight:700}
 .link{background:none;color:var(--muted);font-size:13px;margin-top:18px;text-decoration:underline}
 .note{background:rgba(212,165,55,.08);border:1px solid rgba(212,165,55,.35);color:#e9d39c;font-size:13px;border-radius:10px;padding:10px 12px;text-align:left;margin-bottom:16px;line-height:1.45}
 
@@ -61,7 +61,7 @@ header{position:sticky;top:0;z-index:5;background:rgba(7,7,7,.95);backdrop-filte
 .top-actions{display:flex;gap:8px}
 .top-actions button{width:42px;height:42px;border-radius:12px;background:var(--panel2);color:var(--txt);font-size:16px}
 .top-actions button:active{color:var(--gold)}
-#syncBtn.off{color:var(--red2)}
+#syncBtn.off{color:var(--alert)}
 .search{position:relative}
 .search i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
 .search .inp{padding-left:42px}
@@ -73,7 +73,7 @@ main{padding:14px 16px 120px;max-width:720px;margin:0 auto}
 .count{font-size:12px;color:var(--muted);margin-bottom:10px;letter-spacing:.5px;text-transform:uppercase;font-weight:800}
 .item{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 12px 12px 14px;margin-bottom:10px;cursor:pointer}
 .item:active{border-color:var(--red)}
-.av{width:44px;height:44px;border-radius:12px;background:#1f0a0d;color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:1px solid rgba(192,21,42,.45)}
+.av{width:44px;height:44px;border-radius:12px;background:#0a1f1d;color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:1px solid rgba(37,169,160,.45)}
 .info{flex:1;min-width:0}
 .info b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .info small{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -81,7 +81,7 @@ main{padding:14px 16px 120px;max-width:720px;margin:0 auto}
 .quick:active{border-color:var(--gold)}
 .empty{text-align:center;color:var(--muted);padding:60px 20px;line-height:1.5}
 .empty i{font-size:46px;color:#333;margin-bottom:14px;display:block}
-.fab{position:fixed;right:20px;bottom:calc(22px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:18px;background:var(--red);color:#fff;font-size:24px;box-shadow:0 8px 30px rgba(192,21,42,.5);z-index:6}
+.fab{position:fixed;right:20px;bottom:calc(22px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:18px;background:var(--red);color:#fff;font-size:24px;box-shadow:0 8px 30px rgba(37,169,160,.5);z-index:6}
 .fab:active{background:var(--red2)}
 
 /* Paneles inferiores */
@@ -197,7 +197,7 @@ main{padding:14px 16px 120px;max-width:720px;margin:0 auto}
    ============================================================ */
 // Opcional: pega aquí la URL de tu Apps Script (termina en /exec)
 // para no tener que escribirla en cada dispositivo.
-const API_URL_FIJA = '';
+const API_URL_FIJA = 'https://script.google.com/macros/s/AKfycbyng3MfRJSZYPxGFfRfu9KBFapqoGsY9ZcoK9y4j-8mmz_VjRPo2IyI5SovIi9F2bjRkQ/exec';
 
 const ITERACIONES = 310000;   // PBKDF2 (más alto = más seguro, más lento al desbloquear)
 const BLOQUEO_MIN = 5;        // bloqueo automático por inactividad (minutos)
@@ -212,6 +212,10 @@ const CATS = [
   { n: 'Compras',        i: 'fa-cart-shopping' },
   { n: 'Streaming',      i: 'fa-tv' },
   { n: 'Wi-Fi',          i: 'fa-wifi' },
+  { n: 'Comunicación',   i: 'fa-comments' },
+  { n: 'Running',        i: 'fa-person-running' },
+  { n: 'Diseño',         i: 'fa-palette' },
+  { n: 'Salud',          i: 'fa-heart-pulse' },
   { n: 'Otro',           i: 'fa-key' }
 ];
 
@@ -604,7 +608,7 @@ function fuerza(p) {
   if (p.length >= 8) s++; if (p.length >= 12) s++; if (p.length >= 16) s++;
   if (/[a-z]/.test(p) && /[A-Z]/.test(p)) s++;
   if (/\d/.test(p)) s++; if (/[^A-Za-z0-9]/.test(p)) s++;
-  if (s <= 2) return { w: 30, c: 'var(--red2)', t: 'Débil' };
+  if (s <= 2) return { w: 30, c: 'var(--alert)', t: 'Débil' };
   if (s <= 4) return { w: 65, c: 'var(--gold)', t: 'Aceptable' };
   return { w: 100, c: 'var(--ok)', t: 'Fuerte' };
 }
