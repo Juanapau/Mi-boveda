@@ -1,5 +1,5 @@
 // Mi Bóveda — Service Worker (permite abrir la app rápido y sin conexión)
-const CACHE = 'boveda-v1';
+const CACHE = 'boveda-v2';
 const ARCHIVOS = ['./', 'index.html', 'manifest.json', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', e => {
