@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070707">
+<meta name="robots" content="noindex, nofollow">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mi Bóveda">
+<title>Mi Bóveda</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root{--bg:#070707;--panel:#111;--panel2:#191919;--line:#272727;--red:#C0152A;--red2:#e01f37;--gold:#D4A537;--txt:#f2f2f2;--muted:#9a9a9a;--ok:#3fbf6f}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--txt);font-family:'Nunito',system-ui,sans-serif;min-height:100%}
+button{font-family:inherit;cursor:pointer;border:none}
+input,select,textarea{font-family:inherit;font-size:16px}
+.hidden{display:none!important}
+.screen{min-height:100vh;min-height:100dvh}
+.center{display:flex;align-items:center;justify-content:center;padding:24px}
+
+/* Pantallas de acceso */
+.lock-box{width:100%;max-width:380px;text-align:center}
+.logo{width:84px;height:84px;border-radius:22px;background:var(--red);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:36px;color:var(--gold);box-shadow:0 10px 40px rgba(192,21,42,.35)}
+h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:46px;letter-spacing:2px;line-height:1}
+h1 span{color:var(--red2)}
+.sub{color:var(--muted);margin:8px 0 24px;font-size:15px}
+.field{margin-bottom:12px;text-align:left}
+.field label{display:block;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.inp{width:100%;background:var(--panel2);border:2px solid var(--line);color:var(--txt);border-radius:12px;padding:13px 14px;outline:none}
+.inp:focus{border-color:var(--red)}
+select.inp{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat}
+textarea.inp{min-height:80px;resize:vertical}
+.inp-wrap{display:flex;gap:8px}
+.inp-wrap .inp{flex:1;min-width:0}
+.icon-btn{width:50px;flex-shrink:0;background:var(--panel2);border:2px solid var(--line);color:var(--muted);border-radius:12px;font-size:17px}
+.icon-btn:active{border-color:var(--gold);color:var(--gold)}
+.btn{width:100%;padding:15px;border-radius:12px;background:var(--red);color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn:active{background:var(--red2)}
+.btn:disabled{opacity:.55}
+.btn.ghost{background:transparent;border:2px solid var(--line);color:var(--txt)}
+.btn.danger{background:transparent;border:2px solid var(--red);color:var(--red2)}
+.msg{min-height:22px;margin-top:12px;font-size:14px;color:var(--red2);font-weight:700}
+.link{background:none;color:var(--muted);font-size:13px;margin-top:18px;text-decoration:underline}
+.note{background:rgba(212,165,55,.08);border:1px solid rgba(212,165,55,.35);color:#e9d39c;font-size:13px;border-radius:10px;padding:10px 12px;text-align:left;margin-bottom:16px;line-height:1.45}
+
+/* App */
+header{position:sticky;top:0;z-index:5;background:rgba(7,7,7,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:calc(12px + env(safe-area-inset-top)) 16px 10px;border-bottom:1px solid var(--line)}
+.hwrap{max-width:720px;margin:0 auto}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.brand{font-family:'Bebas Neue';font-size:30px;letter-spacing:1.5px;display:flex;align-items:center;gap:10px}
+.brand i{color:var(--gold);font-size:20px}
+.brand span{color:var(--red2)}
+.top-actions{display:flex;gap:8px}
+.top-actions button{width:42px;height:42px;border-radius:12px;background:var(--panel2);color:var(--txt);font-size:16px}
+.top-actions button:active{color:var(--gold)}
+#syncBtn.off{color:var(--red2)}
+.search{position:relative}
+.search i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search .inp{padding-left:42px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:7px 13px;border-radius:999px;background:var(--panel2);color:var(--muted);font-size:13px;font-weight:700;border:1px solid var(--line)}
+.chip.on{background:var(--red);color:#fff;border-color:var(--red)}
+main{padding:14px 16px 120px;max-width:720px;margin:0 auto}
+.count{font-size:12px;color:var(--muted);margin-bottom:10px;letter-spacing:.5px;text-transform:uppercase;font-weight:800}
+.item{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 12px 12px 14px;margin-bottom:10px;cursor:pointer}
+.item:active{border-color:var(--red)}
+.av{width:44px;height:44px;border-radius:12px;background:#1f0a0d;color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;border:1px solid rgba(192,21,42,.45)}
+.info{flex:1;min-width:0}
+.info b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.info small{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.quick{width:44px;height:44px;border-radius:10px;background:var(--panel2);color:var(--gold);font-size:17px;flex-shrink:0;border:1px solid var(--line)}
+.quick:active{border-color:var(--gold)}
+.empty{text-align:center;color:var(--muted);padding:60px 20px;line-height:1.5}
+.empty i{font-size:46px;color:#333;margin-bottom:14px;display:block}
+.fab{position:fixed;right:20px;bottom:calc(22px + env(safe-area-inset-bottom));width:62px;height:62px;border-radius:18px;background:var(--red);color:#fff;font-size:24px;box-shadow:0 8px 30px rgba(192,21,42,.5);z-index:6}
+.fab:active{background:var(--red2)}
+
+/* Paneles inferiores */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--panel);width:100%;max-width:560px;max-height:92vh;max-height:92dvh;overflow-y:auto;border-radius:22px 22px 0 0;padding:10px 18px calc(22px + env(safe-area-inset-bottom));border-top:3px solid var(--red);animation:up .22s ease}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.grab{width:44px;height:5px;background:var(--line);border-radius:3px;margin:0 auto 14px}
+.sheet h2{font-family:'Bebas Neue';font-weight:400;font-size:30px;letter-spacing:1px;margin-bottom:14px;display:flex;align-items:center;gap:10px;word-break:break-word}
+.sheet h2 i{color:var(--gold);font-size:22px}
+.sheet h3{font-family:'Bebas Neue';font-weight:400;font-size:22px;letter-spacing:1px;color:var(--gold);margin:18px 0 10px}
+.row{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 10px 10px 12px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.row .val{flex:1;min-width:0}
+.row .val small{display:block;font-size:11px;color:var(--gold);font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.row .val div{font-size:16px;word-break:break-all;margin-top:2px;white-space:pre-wrap}
+.pw{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.5px}
+.row button,.row a{width:42px;height:42px;border-radius:10px;background:var(--panel);color:var(--txt);font-size:15px;flex-shrink:0;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-decoration:none}
+.row button:active,.row a:active{color:var(--gold);border-color:var(--gold)}
+.upd{font-size:12px;color:var(--muted);text-align:center;margin-top:4px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.meter{height:5px;background:var(--line);border-radius:3px;margin-top:7px;overflow:hidden}
+.meter span{display:block;height:100%;width:0;transition:.25s}
+.mlabel{font-size:12px;color:var(--muted);margin-top:4px;font-weight:700}
+.txt{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+
+#toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#1d1d1d;border:1px solid var(--gold);color:var(--txt);padding:11px 18px;border-radius:12px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%)}
+.spin{animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- ========== CONEXIÓN ========== -->
+<section id="config" class="screen center hidden">
+  <div class="lock-box">
+    <div class="logo"><i class="fa-solid fa-plug"></i></div>
+    <h1>CONECTAR <span>BÓVEDA</span></h1>
+    <p class="sub">Pega la URL de tu aplicación web de Apps Script</p>
+    <div class="field">
+      <label>URL de Apps Script</label>
+      <input id="cfgUrl" class="inp" type="url" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" autocapitalize="off" spellcheck="false">
+    </div>
+    <button class="btn" id="cfgBtn"><i class="fa-solid fa-link"></i> <span>Conectar</span></button>
+    <div class="msg" id="cfgMsg"></div>
+  </div>
+</section>
+
+<!-- ========== BLOQUEO ========== -->
+<section id="lock" class="screen center hidden">
+  <div class="lock-box">
+    <div class="logo"><i class="fa-solid fa-lock"></i></div>
+    <h1>MI <span>BÓVEDA</span></h1>
+    <p class="sub" id="lockSub">Ingresa tu contraseña maestra</p>
+    <div class="note hidden" id="setupNote">
+      <i class="fa-solid fa-triangle-exclamation"></i> <b>Importante:</b> la contraseña maestra cifra todo.
+      Si la olvidas, <b>no hay forma de recuperar</b> tus datos. Usa una frase larga que puedas recordar
+      (ej. <i>MisPerritosCorrenEnJarabacoa2026</i>).
+    </div>
+    <form id="lockForm" autocomplete="off">
+      <div class="field">
+        <label>Contraseña maestra</label>
+        <div class="inp-wrap">
+          <input id="p1" class="inp" type="password" autocomplete="current-password">
+          <button type="button" class="icon-btn" data-eye="p1"><i class="fa-solid fa-eye"></i></button>
+        </div>
+      </div>
+      <div class="field hidden" id="p2wrap">
+        <label>Confirmar contraseña</label>
+        <input id="p2" class="inp" type="password" autocomplete="new-password">
+      </div>
+      <button class="btn" id="lockBtn" type="submit"><i class="fa-solid fa-unlock"></i> <span>Desbloquear</span></button>
+    </form>
+    <div class="msg" id="lockMsg"></div>
+    <button class="link" id="olvidarBtn" type="button">Cambiar conexión / olvidar este dispositivo</button>
+  </div>
+</section>
+
+<!-- ========== APP ========== -->
+<section id="app" class="screen hidden">
+  <header>
+    <div class="hwrap">
+      <div class="top">
+        <div class="brand"><i class="fa-solid fa-shield-halved"></i> MI <span>BÓVEDA</span></div>
+        <div class="top-actions">
+          <button id="syncBtn" title="Sincronizar"><i class="fa-solid fa-rotate"></i></button>
+          <button id="ajustesBtn" title="Ajustes"><i class="fa-solid fa-gear"></i></button>
+          <button id="lockNow" title="Bloquear"><i class="fa-solid fa-lock"></i></button>
+        </div>
+      </div>
+      <div class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="q" class="inp" type="search" placeholder="Buscar servicio, usuario…" autocomplete="off">
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+  </header>
+  <main>
+    <div class="count" id="count"></div>
+    <div id="list"></div>
+  </main>
+  <button class="fab" id="addBtn" title="Agregar"><i class="fa-solid fa-plus"></i></button>
+</section>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN
+   ============================================================ */
+// Opcional: pega aquí la URL de tu Apps Script (termina en /exec)
+// para no tener que escribirla en cada dispositivo.
+const API_URL_FIJA = '';
+
+const ITERACIONES = 310000;   // PBKDF2 (más alto = más seguro, más lento al desbloquear)
+const BLOQUEO_MIN = 5;        // bloqueo automático por inactividad (minutos)
+const BORRAR_PORTAPAPELES_S = 30;
+
+const CATS = [
+  { n: 'Correo',         i: 'fa-envelope' },
+  { n: 'Redes sociales', i: 'fa-hashtag' },
+  { n: 'Banco',          i: 'fa-building-columns' },
+  { n: 'Trabajo',        i: 'fa-briefcase' },
+  { n: 'Educación',      i: 'fa-graduation-cap' },
+  { n: 'Compras',        i: 'fa-cart-shopping' },
+  { n: 'Streaming',      i: 'fa-tv' },
+  { n: 'Wi-Fi',          i: 'fa-wifi' },
+  { n: 'Otro',           i: 'fa-key' }
+];
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const enc = new TextEncoder(), dec = new TextDecoder();
+const LS = {
+  get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} },
+  del: k => { try { localStorage.removeItem(k); } catch (e) {} }
+};
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const b64 = u8 => { let s = ''; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const cat = n => CATS.find(c => c.n === n) || CATS[CATS.length - 1];
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : b64(crypto.getRandomValues(new Uint8Array(16))).replace(/[^a-z0-9]/gi, ''));
+
+const S = { key: null, token: null, rows: [], items: [], filtro: 'Todas', q: '', setup: false, saltTmp: null };
+
+function mostrar(id) {
+  ['config', 'lock', 'app'].forEach(s => $('#' + s).classList.toggle('hidden', s !== id));
+}
+function toast(t) {
+  const el = $('#toast'); el.textContent = t; el.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(() => el.classList.remove('show'), 2200);
+}
+function ocupado(btn, on, txt) {
+  btn.disabled = on;
+  if (on) { btn._h = btn.innerHTML; btn.innerHTML = `<i class="fa-solid fa-circle-notch spin"></i> ${txt || 'Procesando…'}`; }
+  else if (btn._h) btn.innerHTML = btn._h;
+}
+function setSync(e) {
+  const b = $('#syncBtn'), i = b.querySelector('i');
+  i.classList.toggle('spin', e === 'busy');
+  b.classList.toggle('off', e === 'off');
+  b.title = e === 'off' ? 'Sin conexión (copia local)' : 'Sincronizar';
+}
+
+/* ============================================================
+   API (Apps Script)
+   ============================================================ */
+function apiUrl() { return API_URL_FIJA || LS.get('bv_url'); }
+async function api(body) {
+  const r = await fetch(apiUrl(), { method: 'POST', body: JSON.stringify(body) }); // text/plain: sin preflight CORS
+  if (!r.ok) throw new Error('Error de red');
+  return r.json();
+}
+
+/* ============================================================
+   CRIPTOGRAFÍA (todo ocurre en este dispositivo)
+   ============================================================ */
+async function derivar(pass, salt) {
+  const base = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveBits']);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', salt: enc.encode(salt), iterations: ITERACIONES, hash: 'SHA-256' }, base, 512));
+  const key = await crypto.subtle.importKey('raw', bits.slice(0, 32), { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+  return { key, token: b64(bits.slice(32)) };   // 256 bits para cifrar + 256 bits para autenticarse
+}
+async function cifrar(obj, key = S.key) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc.encode(JSON.stringify(obj))));
+  return b64(iv) + '.' + b64(ct);
+}
+async function descifrar(str, key = S.key) {
+  const [a, b] = String(str).split('.');
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(a) }, key, unb64(b));
+  return JSON.parse(dec.decode(pt));
+}
+async function descifrarTodo(rows, key) {
+  return Promise.all(rows.map(async r => ({ id: r.id, t: r.t, ...(await descifrar(r.d, key)) })));
+}
+const datosDe = i => ({ servicio: i.servicio, usuario: i.usuario, clave: i.clave, url: i.url, cat: i.cat, notas: i.notas });
+const guardarCache = () => LS.set('bv_cache', JSON.stringify(S.rows));
+
+/* ============================================================
+   INICIO / CONEXIÓN
+   ============================================================ */
+async function inicio() {
+  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+  if (!window.crypto || !crypto.subtle) {
+    document.body.innerHTML = '<div class="empty"><i class="fa-solid fa-lock"></i>Abre la app desde una dirección https:// (por ejemplo GitHub Pages) para poder cifrar los datos.</div>';
+    return;
+  }
+  if (!apiUrl()) return mostrar('config');
+  if (LS.get('bv_salt')) return pantallaLock(false);   // acceso rápido, incluso sin conexión
+  await conectar();
+}
+
+async function conectar() {
+  try {
+    const info = await api({ action: 'info' });
+    if (!info.ok) throw new Error(info.error);
+    if (info.iniciada) { LS.set('bv_salt', info.salt); pantallaLock(false); }
+    else { S.saltTmp = info.salt; pantallaLock(true); }
+    return true;
+  } catch (e) {
+    mostrar('config');
+    $('#cfgUrl').value = apiUrl() || '';
+    $('#cfgMsg').textContent = 'No se pudo conectar. Revisa la URL y que la implementación tenga acceso "Cualquier usuario".';
+    return false;
+  }
+}
+
+$('#cfgBtn').onclick = async () => {
+  const url = $('#cfgUrl').value.trim();
+  $('#cfgMsg').textContent = '';
+  if (!/^https:\/\/script\.google(usercontent)?\.com\/.+/.test(url)) { $('#cfgMsg').textContent = 'La URL debe empezar por https://script.google.com/'; return; }
+  LS.set('bv_url', url);
+  const b = $('#cfgBtn'); ocupado(b, true, 'Conectando…');
+  const ok = await conectar();
+  ocupado(b, false);
+  if (!ok) LS.del('bv_url');
+};
+
+function pantallaLock(setup) {
+  S.setup = setup;
+  mostrar('lock');
+  $('#lockSub').textContent = setup ? 'Crea tu contraseña maestra' : 'Ingresa tu contraseña maestra';
+  $('#setupNote').classList.toggle('hidden', !setup);
+  $('#p2wrap').classList.toggle('hidden', !setup);
+  $('#p1').autocomplete = setup ? 'new-password' : 'current-password';
+  $('#lockBtn').innerHTML = setup ? '<i class="fa-solid fa-shield-halved"></i> <span>Crear bóveda</span>' : '<i class="fa-solid fa-unlock"></i> <span>Desbloquear</span>';
+  $('#lockMsg').textContent = '';
+  $('#p1').value = ''; $('#p2').value = '';
+  setTimeout(() => $('#p1').focus(), 50);
+}
+
+/* ============================================================
+   CREAR / DESBLOQUEAR / BLOQUEAR
+   ============================================================ */
+$('#lockForm').onsubmit = async e => {
+  e.preventDefault();
+  const p1 = $('#p1').value, p2 = $('#p2').value, msg = $('#lockMsg'), b = $('#lockBtn');
+  msg.textContent = '';
+  if (!p1) { msg.textContent = 'Escribe tu contraseña maestra'; return; }
+  if (S.setup) {
+    if (p1.length < 10) { msg.textContent = 'Usa al menos 10 caracteres'; return; }
+    if (p1 !== p2) { msg.textContent = 'Las contraseñas no coinciden'; return; }
+  }
+  ocupado(b, true, S.setup ? 'Creando…' : 'Verificando…');
+  try {
+    S.setup ? await crear(p1) : await desbloquear(p1);
+  } catch (err) {
+    msg.textContent = err.message || 'Error inesperado';
+  } finally {
+    ocupado(b, false);
+    $('#p1').value = ''; $('#p2').value = '';
+  }
+};
+
+async function crear(pass) {
+  const k = await derivar(pass, S.saltTmp);
+  const r = await api({ action: 'setup', token: k.token });
+  if (!r.ok) throw new Error(r.error);
+  LS.set('bv_salt', S.saltTmp);
+  S.rows = []; S.items = []; guardarCache();
+  entrar(k);
+  setSync('ok');
+  toast('¡Bóveda creada!');
+}
+
+async function desbloquear(pass) {
+  let salt = LS.get('bv_salt');
+  let k = await derivar(pass, salt);
+
+  // 1) Copia local cifrada → abre al instante
+  let local = false;
+  const cache = JSON.parse(LS.get('bv_cache') || '[]');
+  if (cache.length) {
+    try { S.rows = cache; S.items = await descifrarTodo(cache, k.key); local = true; entrar(k); setSync('busy'); } catch (e) {}
+  }
+
+  // 2) Servidor
+  let r;
+  try { r = await api({ action: 'list', token: k.token }); }
+  catch (e) {
+    if (local) { setSync('off'); toast('Sin conexión · mostrando copia local'); return; }
+    throw new Error('No hay conexión con el servidor');
+  }
+  if (!r.ok && r.error === 'auth') {
+    // ¿Se cambió la contraseña maestra en otro dispositivo?
+    const info = await api({ action: 'info' });
+    if (info.salt !== salt) {
+      salt = info.salt; LS.set('bv_salt', salt);
+      k = await derivar(pass, salt);
+      r = await api({ action: 'list', token: k.token });
+    }
+  }
+  if (!r.ok) {
+    if (local) bloquear();
+    throw new Error(r.error === 'auth' ? 'Contraseña incorrecta' : r.error);
+  }
+  S.rows = r.items;
+  S.items = await descifrarTodo(r.items, k.key);
+  guardarCache();
+  if (local) { S.key = k.key; S.token = k.token; render(); } else entrar(k);
+  setSync('ok');
+}
+
+function entrar(k) {
+  S.key = k.key; S.token = k.token;
+  S.q = ''; $('#q').value = ''; S.filtro = 'Todas';
+  ultimaAct = Date.now();
+  mostrar('app');
+  render();
+}
+
+function bloquear() {
+  S.key = null; S.token = null; S.items = []; S.rows = [];
+  cerrarSheet(true);
+  $('#list').innerHTML = '';
+  pantallaLock(false);
+}
+
+$('#lockNow').onclick = bloquear;
+
+$('#olvidarBtn').onclick = () => {
+  if (!confirm('Se borrará la conexión y la copia local de este dispositivo. Tus datos en Google Sheets no se tocan. ¿Continuar?')) return;
+  ['bv_url', 'bv_salt', 'bv_cache'].forEach(LS.del);
+  if (API_URL_FIJA) conectar(); else { $('#cfgUrl').value = ''; $('#cfgMsg').textContent = ''; mostrar('config'); }
+};
+
+async function sincronizar() {
+  if (!S.token) return;
+  setSync('busy');
+  try {
+    const r = await api({ action: 'list', token: S.token });
+    if (!r.ok) {
+      if (r.error === 'auth') { LS.del('bv_cache'); bloquear(); $('#lockMsg').textContent = 'La contraseña maestra cambió. Ingresa la nueva.'; return; }
+      throw new Error(r.error);
+    }
+    S.rows = r.items;
+    S.items = await descifrarTodo(r.items, S.key);
+    guardarCache(); render(); setSync('ok');
+  } catch (e) { setSync('off'); toast('Sin conexión'); }
+}
+$('#syncBtn').onclick = async () => { await sincronizar(); if (!$('#syncBtn').classList.contains('off')) toast('Sincronizado'); };
+
+/* ============================================================
+   LISTA
+   ============================================================ */
+function render() {
+  const q = norm(S.q);
+  const cnt = {};
+  S.items.forEach(i => { const c = cat(i.cat).n; cnt[c] = (cnt[c] || 0) + 1; });
+  const cats = ['Todas', ...CATS.map(c => c.n).filter(n => cnt[n])];
+  if (!cats.includes(S.filtro)) S.filtro = 'Todas';
+  $('#chips').innerHTML = cats.length > 2 ? cats.map(c =>
+    `<button class="chip ${c === S.filtro ? 'on' : ''}" data-chip="${esc(c)}">${esc(c)} · ${c === 'Todas' ? S.items.length : cnt[c]}</button>`).join('') : '';
+
+  const lista = S.items
+    .filter(i => (S.filtro === 'Todas' || cat(i.cat).n === S.filtro) &&
+                 (!q || norm([i.servicio, i.usuario, i.url, i.notas].join(' ')).includes(q)))
+    .sort((a, b) => (a.servicio || '').localeCompare(b.servicio || '', 'es', { sensitivity: 'base' }));
+
+  $('#count').textContent = S.items.length ? `${lista.length} de ${S.items.length} cuentas` : '';
+
+  if (!S.items.length) {
+    $('#list').innerHTML = '<div class="empty"><i class="fa-solid fa-vault"></i>Tu bóveda está vacía.<br>Toca <b>+</b> para guardar tu primera cuenta.</div>';
+  } else if (!lista.length) {
+    $('#list').innerHTML = '<div class="empty"><i class="fa-solid fa-magnifying-glass"></i>Sin resultados</div>';
+  } else {
+    $('#list').innerHTML = lista.map(i => `
+      <div class="item" data-id="${esc(i.id)}">
+        <div class="av"><i class="fa-solid ${cat(i.cat).i}"></i></div>
+        <div class="info"><b>${esc(i.servicio)}</b><small>${esc(i.usuario || '—')}</small></div>
+        <button class="quick" data-copy="${esc(i.id)}" title="Copiar contraseña"><i class="fa-regular fa-copy"></i></button>
+      </div>`).join('');
+  }
+}
+
+$('#q').addEventListener('input', e => { S.q = e.target.value; render(); });
+$('#chips').addEventListener('click', e => { const c = e.target.closest('[data-chip]'); if (c) { S.filtro = c.dataset.chip; render(); } });
+$('#list').addEventListener('click', e => {
+  const cp = e.target.closest('[data-copy]');
+  if (cp) { const i = S.items.find(x => x.id === cp.dataset.copy); if (i) copiar(i.clave, 'Contraseña'); return; }
+  const it = e.target.closest('.item');
+  if (it) detalle(it.dataset.id);
+});
+$('#addBtn').onclick = () => formulario();
+$('#ajustesBtn').onclick = ajustes;
+
+/* ============================================================
+   PANELES
+   ============================================================ */
+function abrirSheet(html) {
+  cerrarSheet(true);
+  const o = document.createElement('div');
+  o.className = 'overlay'; o.id = 'ov';
+  o.innerHTML = `<div class="sheet"><div class="grab"></div>${html}</div>`;
+  o.addEventListener('click', e => { if (e.target === o) cerrarSheet(); });
+  document.body.appendChild(o);
+  if (!history.state || !history.state.sheet) history.pushState({ sheet: 1 }, '');
+  return o;
+}
+function cerrarSheet(silencioso) {
+  const o = $('#ov'); if (o) o.remove();
+  if (!silencioso && history.state && history.state.sheet) history.back();
+}
+addEventListener('popstate', () => { const o = $('#ov'); if (o) o.remove(); });  // botón Atrás del móvil
+
+async function copiar(txt, etiqueta) {
+  if (!txt) { toast('Campo vacío'); return; }
+  try { await navigator.clipboard.writeText(txt); }
+  catch (e) {
+    const t = document.createElement('textarea'); t.value = txt; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove();
+  }
+  toast(`${etiqueta} copiado`);
+  clearTimeout(copiar._t);
+  copiar._t = setTimeout(() => { if (document.hasFocus()) navigator.clipboard.writeText('').catch(() => {}); }, BORRAR_PORTAPAPELES_S * 1000);
+}
+
+function linkSeguro(u) { u = String(u || '').trim(); return /^https?:\/\//i.test(u) ? u : 'https://' + u; }
+function fecha(t) { const d = new Date(t); return isNaN(d) ? '' : d.toLocaleString('es-DO', { dateStyle: 'medium', timeStyle: 'short' }); }
+
+/* ---------- Detalle ---------- */
+function detalle(id) {
+  const i = S.items.find(x => x.id === id); if (!i) return;
+  const c = cat(i.cat);
+  const o = abrirSheet(`
+    <h2><i class="fa-solid ${c.i}"></i> ${esc(i.servicio)}</h2>
+    ${i.usuario ? `<div class="row"><div class="val"><small>Usuario</small><div>${esc(i.usuario)}</div></div>
+      <button data-a="cu" title="Copiar"><i class="fa-regular fa-copy"></i></button></div>` : ''}
+    <div class="row"><div class="val"><small>Contraseña</small><div class="pw" id="pwv">••••••••••</div></div>
+      <button data-a="ver" title="Mostrar"><i class="fa-solid fa-eye"></i></button>
+      <button data-a="cp" title="Copiar"><i class="fa-regular fa-copy"></i></button></div>
+    ${i.url ? `<div class="row"><div class="val"><small>Sitio web</small><div>${esc(i.url)}</div></div>
+      <a href="${esc(linkSeguro(i.url))}" target="_blank" rel="noopener noreferrer" title="Abrir"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>` : ''}
+    <div class="row"><div class="val"><small>Categoría</small><div>${esc(c.n)}</div></div></div>
+    ${i.notas ? `<div class="row"><div class="val"><small>Notas</small><div>${esc(i.notas)}</div></div></div>` : ''}
+    <div class="upd">Actualizado: ${esc(fecha(i.t))}</div>
+    <div class="btns">
+      <button class="btn ghost" data-a="edit"><i class="fa-solid fa-pen"></i> Editar</button>
+      <button class="btn danger" data-a="del"><i class="fa-solid fa-trash"></i> Eliminar</button>
+    </div>`);
+
+  o.addEventListener('click', async e => {
+    const b = e.target.closest('[data-a]'); if (!b) return;
+    switch (b.dataset.a) {
+      case 'cu': copiar(i.usuario, 'Usuario'); break;
+      case 'cp': copiar(i.clave, 'Contraseña'); break;
+      case 'ver': {
+        const v = $('#pwv'), oculto = v.textContent.startsWith('•');
+        v.textContent = oculto ? (i.clave || '—') : '••••••••••';
+        b.innerHTML = `<i class="fa-solid ${oculto ? 'fa-eye-slash' : 'fa-eye'}"></i>`;
+        break;
+      }
+      case 'edit': formulario(i.id); break;
+      case 'del':
+        b.dataset.a = 'del2';
+        b.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> ¿Seguro? Toca otra vez';
+        break;
+      case 'del2':
+        ocupado(b, true, 'Eliminando…');
+        try {
+          const r = await api({ action: 'delete', token: S.token, id: i.id });
+          if (!r.ok) throw new Error(r.error);
+          S.rows = S.rows.filter(x => x.id !== i.id);
+          S.items = S.items.filter(x => x.id !== i.id);
+          guardarCache(); cerrarSheet(); render(); toast('Cuenta eliminada');
+        } catch (err) { ocupado(b, false); toast('No se pudo eliminar (¿sin conexión?)'); }
+        break;
+    }
+  });
+}
+
+/* ---------- Generador y fuerza ---------- */
+function rnd(m) {
+  const a = new Uint32Array(1), lim = Math.floor(2 ** 32 / m) * m; let x;
+  do { crypto.getRandomValues(a); x = a[0]; } while (x >= lim);
+  return x % m;
+}
+function generar(n = 16) {
+  const sets = ['ABCDEFGHJKLMNPQRSTUVWXYZ', 'abcdefghijkmnopqrstuvwxyz', '23456789', '!@#$%&*?-_+='];
+  const todos = sets.join('');
+  const out = sets.map(s => s[rnd(s.length)]);
+  while (out.length < n) out.push(todos[rnd(todos.length)]);
+  for (let i = out.length - 1; i > 0; i--) { const j = rnd(i + 1); [out[i], out[j]] = [out[j], out[i]]; }
+  return out.join('');
+}
+function fuerza(p) {
+  if (!p) return { w: 0, c: 'transparent', t: '' };
+  let s = 0;
+  if (p.length >= 8) s++; if (p.length >= 12) s++; if (p.length >= 16) s++;
+  if (/[a-z]/.test(p) && /[A-Z]/.test(p)) s++;
+  if (/\d/.test(p)) s++; if (/[^A-Za-z0-9]/.test(p)) s++;
+  if (s <= 2) return { w: 30, c: 'var(--red2)', t: 'Débil' };
+  if (s <= 4) return { w: 65, c: 'var(--gold)', t: 'Aceptable' };
+  return { w: 100, c: 'var(--ok)', t: 'Fuerte' };
+}
+
+/* ---------- Agregar / Editar ---------- */
+function formulario(id) {
+  const i = id ? S.items.find(x => x.id === id) : {};
+  const o = abrirSheet(`
+    <h2><i class="fa-solid ${id ? 'fa-pen' : 'fa-plus'}"></i> ${id ? 'Editar cuenta' : 'Nueva cuenta'}</h2>
+    <form id="fItem" autocomplete="off">
+      <div class="field"><label>Servicio *</label>
+        <input class="inp" name="servicio" required maxlength="80" placeholder="Ej. Gmail, Banco Popular, SIGERD" value="${esc(i.servicio)}"></div>
+      <div class="field"><label>Usuario / correo</label>
+        <input class="inp" name="usuario" maxlength="120" autocapitalize="off" spellcheck="false" value="${esc(i.usuario)}"></div>
+      <div class="field"><label>Contraseña</label>
+        <div class="inp-wrap">
+          <input class="inp pw" name="clave" id="fClave" type="password" autocapitalize="off" spellcheck="false" autocomplete="new-password" value="${esc(i.clave)}">
+          <button type="button" class="icon-btn" data-eye="fClave" title="Mostrar"><i class="fa-solid fa-eye"></i></button>
+          <button type="button" class="icon-btn" id="genBtn" title="Generar segura"><i class="fa-solid fa-dice"></i></button>
+        </div>
+        <div class="meter"><span id="mBar"></span></div><div class="mlabel" id="mTxt"></div>
+      </div>
+      <div class="field"><label>Sitio web</label>
+        <input class="inp" name="url" type="text" inputmode="url" autocapitalize="off" spellcheck="false" placeholder="ejemplo.com" value="${esc(i.url)}"></div>
+      <div class="field"><label>Categoría</label>
+        <select class="inp" name="cat">${CATS.map(c => `<option ${cat(i.cat).n === c.n && id ? 'selected' : ''}>${c.n}</option>`).join('')}</select></div>
+      <div class="field"><label>Notas</label>
+        <textarea class="inp" name="notas" maxlength="1000" placeholder="Preguntas de seguridad, PIN, etc.">${esc(i.notas)}</textarea></div>
+      <button class="btn" type="submit" id="fSave"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+    </form>`);
+
+  if (!id) o.querySelector('[name=cat]').value = S.filtro !== 'Todas' ? S.filtro : 'Otro';
+  const clave = $('#fClave');
+  const medir = () => { const f = fuerza(clave.value); $('#mBar').style.width = f.w + '%'; $('#mBar').style.background = f.c; $('#mTxt').textContent = f.t; };
+  clave.addEventListener('input', medir); medir();
+  $('#genBtn').onclick = () => { clave.value = generar(16); clave.type = 'text'; medir(); toast('Contraseña generada'); };
+  if (!id) setTimeout(() => o.querySelector('[name=servicio]').focus(), 250);
+
+  $('#fItem').onsubmit = async e => {
+    e.preventDefault();
+    const fd = Object.fromEntries(new FormData(e.target));
+    const data = {
+      servicio: fd.servicio.trim(), usuario: fd.usuario.trim(), clave: fd.clave,
+      url: fd.url.trim(), cat: fd.cat, notas: fd.notas.trim()
+    };
+    if (!data.servicio) return;
+    const b = $('#fSave'); ocupado(b, true, 'Cifrando y guardando…');
+    try {
+      const nid = id || uid();
+      const d = await cifrar(data);
+      const r = await api({ action: 'save', token: S.token, id: nid, d });
+      if (!r.ok) throw new Error(r.error);
+      const fila = { id: nid, d, t: r.t };
+      const pos = S.rows.findIndex(x => x.id === nid);
+      pos >= 0 ? S.rows[pos] = fila : S.rows.push(fila);
+      const it = { id: nid, t: r.t, ...data };
+      const p2 = S.items.findIndex(x => x.id === nid);
+      p2 >= 0 ? S.items[p2] = it : S.items.push(it);
+      guardarCache(); cerrarSheet(); render(); toast(id ? 'Cambios guardados' : 'Cuenta guardada');
+    } catch (err) {
+      ocupado(b, false);
+      toast(err.message === 'auth' ? 'Sesión inválida, vuelve a desbloquear' : 'No se pudo guardar (¿sin conexión?)');
+    }
+  };
+}
+
+/* ---------- Ajustes ---------- */
+function ajustes() {
+  abrirSheet(`
+    <h2><i class="fa-solid fa-gear"></i> Ajustes</h2>
+    <p class="txt"><i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i>
+      Tus datos se cifran en este dispositivo con AES-256 antes de enviarse. En Google Sheets solo hay texto ilegible.
+      Bloqueo automático tras ${BLOQUEO_MIN} min de inactividad.</p>
+    <h3>Cambiar contraseña maestra</h3>
+    <form id="fMaestra" autocomplete="off">
+      <div class="field"><label>Contraseña actual</label><input class="inp" type="password" name="a" autocomplete="current-password"></div>
+      <div class="field"><label>Nueva contraseña</label><input class="inp" type="password" name="n" autocomplete="new-password"></div>
+      <div class="field"><label>Confirmar nueva</label><input class="inp" type="password" name="c" autocomplete="new-password"></div>
+      <button class="btn" id="mBtn" type="submit"><i class="fa-solid fa-key"></i> Cambiar y re-cifrar</button>
+      <div class="msg" id="mMsg"></div>
+    </form>
+    <h3>Este dispositivo</h3>
+    <button class="btn ghost" id="exitBtn"><i class="fa-solid fa-right-from-bracket"></i> Olvidar este dispositivo</button>`);
+
+  $('#exitBtn').onclick = () => { bloquear(); $('#olvidarBtn').click(); };
+
+  $('#fMaestra').onsubmit = async e => {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(e.target)), msg = $('#mMsg'), b = $('#mBtn');
+    msg.textContent = '';
+    if (f.n.length < 10) { msg.textContent = 'La nueva debe tener al menos 10 caracteres'; return; }
+    if (f.n !== f.c) { msg.textContent = 'Las contraseñas nuevas no coinciden'; return; }
+    ocupado(b, true, 'Re-cifrando…');
+    try {
+      const ka = await derivar(f.a, LS.get('bv_salt'));
+      if (ka.token !== S.token) throw new Error('La contraseña actual no es correcta');
+      // Traer lo más reciente antes de re-cifrar
+      const r0 = await api({ action: 'list', token: S.token });
+      if (!r0.ok) throw new Error('No se pudo leer la bóveda');
+      const items = await descifrarTodo(r0.items, S.key);
+      const salt = b64(crypto.getRandomValues(new Uint8Array(24)));
+      const kn = await derivar(f.n, salt);
+      const rows = await Promise.all(items.map(async it => ({ id: it.id, d: await cifrar(datosDe(it), kn.key) })));
+      const r = await api({ action: 'rekey', token: S.token, newToken: kn.token, salt, rows });
+      if (!r.ok) throw new Error(r.error);
+      LS.set('bv_salt', salt);
+      S.key = kn.key; S.token = kn.token;
+      await sincronizar();
+      cerrarSheet(); toast('Contraseña maestra actualizada');
+    } catch (err) {
+      ocupado(b, false); msg.textContent = err.message || 'Error inesperado';
+    }
+  };
+}
+
+/* ============================================================
+   EVENTOS GLOBALES
+   ============================================================ */
+// Mostrar / ocultar contraseñas
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-eye]'); if (!b) return;
+  const inp = document.getElementById(b.dataset.eye);
+  const ver = inp.type === 'password';
+  inp.type = ver ? 'text' : 'password';
+  b.innerHTML = `<i class="fa-solid ${ver ? 'fa-eye-slash' : 'fa-eye'}"></i>`;
+});
+
+// Bloqueo automático
+let ultimaAct = Date.now();
+['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(ev => addEventListener(ev, () => ultimaAct = Date.now(), { passive: true }));
+setInterval(() => { if (S.key && Date.now() - ultimaAct > BLOQUEO_MIN * 60000) bloquear(); }, 15000);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) S.ocultoDesde = Date.now();
+  else if (S.key && S.ocultoDesde && Date.now() - S.ocultoDesde > 60000) bloquear();  // >1 min fuera de la app
+});
+
+inicio();
+</script>
+</body>
+</html>
